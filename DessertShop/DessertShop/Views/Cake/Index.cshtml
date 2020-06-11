@@ -1,0 +1,6 @@
+﻿@model DesertViewModel
+
+@foreach (var Cake in Model.Cakes)
+{
+<partial name="_CakeCard" model="Cake" />
+}

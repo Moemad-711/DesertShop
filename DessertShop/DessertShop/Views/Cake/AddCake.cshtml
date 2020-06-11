@@ -1,0 +1,70 @@
+﻿@model DesertViewModel
+
+<form asp-action="AddCake" enctype="multipart/form-data" asp-antiforgery="true" method="post" class="form-horizontal" role="form">
+    <h4>You're just one step away from adding your delicious Cake.</h4>
+
+
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CakeName" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.CakeName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CakePhoto" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input type="file" asp-for="@Model.Cake.CakePhotoName" class="form-control" multiple />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.Price" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.Price" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CategoryId" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <select asp-for="@Model.Cake.CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.ShortDescreption" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.ShortDescreption" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.LongDescreption" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.LongDescreption" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    <script type="text/javascript">
+// Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });</script>
+}

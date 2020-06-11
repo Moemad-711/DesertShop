@@ -1,0 +1,39 @@
+﻿@model Pie
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+        <img src="images/@Model.PiePhoto" style="width:100%;height:150px;" alt="">
+        <div class="caption">
+            <h3 class="pull-right">@Model.Price.ToString("c")</h3>
+            <h3>
+                <a asp-controller="Pie"
+                   asp-action="Details"
+                   asp-route-id="@Model.PieId">@Model.PieName</a>
+            </h3>
+            <p>@Model.ShortDescreption</p>
+        </div>
+        <div class="addToCart">
+            <p class="button" style="display:inline-block">
+                <a class="btn btn-primary"
+                   asp-controller="ShoppingCart"
+                   asp-action="AddToCart"
+                   asp-route-id="@Model.PieId">Add to cart</a>
+            </p>
+            @if (User.IsInRole(Constants.AdministratorRole))
+            {
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-danger"
+                       asp-controller="Pie"
+                       asp-action="RemovePie"
+                       asp-route-id="@Model.PieId">Remove</a>
+                </p>
+
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-secondary"
+                       asp-controller="Pie"
+                       asp-action="EditPie"
+                       asp-route-id="@Model.PieId">Edit</a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

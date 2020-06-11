@@ -1,0 +1,9 @@
+﻿@model DesertViewModel
+
+<ul class="list-group">
+    @foreach (var category in Model.Categories)
+    {
+        <partial name="_CategoryCard" model="category"/>
+    }
+
+</ul>

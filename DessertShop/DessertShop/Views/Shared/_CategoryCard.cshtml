@@ -1,0 +1,14 @@
+﻿@model Category
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+    <li class=" list-group-item-text">
+        <div class="list-group-item">
+            <h3>
+                <a class="text-dark"
+                   asp-controller="@Model.CategoryName"
+                   asp-action="Index">@Model.CategoryName</a>
+            </h3>
+         </div>
+    </li>

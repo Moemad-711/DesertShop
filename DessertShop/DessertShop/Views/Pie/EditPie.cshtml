@@ -1,0 +1,82 @@
+﻿@model DesertViewModel
+    <p>
+        <a asp-controller="Pie"
+           asp-action="MakePieOfTheWeek"
+           asp-route-id="@Model.Pie.PieId">
+            <span class="glyphicon glyphicon-star"></span>
+        </a>
+    </p>
+
+    <form asp-action="EditPie" enctype="multipart/form-data" asp-antiforgery="true" method="post" class="form-horizontal" role="form">
+        <h4>You're just one step away from adding your delicious pie.</h4>
+
+
+        <input type="hidden" asp-for="@Model.Pie.PieId" value="@Model.Pie.PieId" />
+        <input type="hidden" asp-for="@Model.Pie.PiePhoto" value="@Model.Pie.PiePhoto" />
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.PieName" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="@Model.Pie.PieName" value="@Model.Pie.PieName" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.PiePhoto" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <img src="~/images/@Model.Pie.PiePhoto" width="200" height="200" />
+                <input type="file" asp-for="@Model.Pie.PiePhotoName" value="@Model.Pie.PiePhotoName" class="form-control" multiple />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.Price" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="@Model.Pie.Price" value="@Model.Pie.Price" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.CategoryId" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <select asp-for="@Model.Pie.CategoryId">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.ShortDescreption" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="@Model.Pie.ShortDescreption" value="@Model.Pie.ShortDescreption" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.Pie.LongDescreption" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="@Model.Pie.LongDescreption" value="@Model.Pie.LongDescreption" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" class="btn btn-primary" value="Update" />
+            </div>
+        </div>
+
+    </form>
+
+@section scripts{
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}  

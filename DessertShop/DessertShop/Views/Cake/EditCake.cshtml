@@ -1,0 +1,78 @@
+﻿@model DesertViewModel
+<p>
+    <a asp-controller="Cake"
+       asp-action="MakeCakeOfTheWeek"
+       asp-route-id="@Model.Cake.CakeId">
+        <span class="glyphicon glyphicon-star"></span>
+    </a>
+</p>
+
+<form asp-action="EditCake" enctype="multipart/form-data" asp-antiforgery="true" method="post" class="form-horizontal" role="form">
+    <h4>You're just one step away from adding your delicious Cake.</h4>
+
+
+    <input type="hidden" asp-for="@Model.Cake.CakeId" value="@Model.Cake.CakeId" />
+    <input type="hidden" asp-for="@Model.Cake.CakePhoto" value="@Model.Cake.CakePhoto" />
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CakeName" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.CakeName" value="@Model.Cake.CakeName" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CakePhoto" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <img src="~/images/@Model.Cake.CakePhoto" width="200" height="200" />
+            <input type="file" asp-for="@Model.Cake.CakePhotoName" value="@Model.Cake.CakePhotoName" class="form-control" multiple />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.Price" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.Price" value="@Model.Cake.Price" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.CategoryId" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <select asp-for="@Model.Cake.CategoryId">
+                @foreach (var category in Model.Categories)
+                {
+    <option value="@category.CategoryId">@category.CategoryName</option>}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.ShortDescreption" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.ShortDescreption" value="@Model.Cake.ShortDescreption" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Cake.LongDescreption" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="@Model.Cake.LongDescreption" value="@Model.Cake.LongDescreption" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    <script type="text/javascript">// Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });</script>
+}  

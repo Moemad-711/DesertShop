@@ -1,0 +1,40 @@
+﻿@model Cake
+<div class="col-sm-4 col-lg-4 col-md-4">
+    <div class="thumbnail">
+        <img src="images/@Model.CakePhoto" style="width:100%;height:150px;" alt="">
+        <div class="caption">
+            <h3 class="pull-right">@Model.Price.ToString("c")</h3>
+            <h3>
+                <a asp-controller="Cake"
+                   asp-action="Details"
+                   asp-route-id="@Model.CakeId">@Model.CakeName</a>
+            </h3>
+            <p>@Model.ShortDescreption</p>
+        </div>
+        <div class="addToCart">
+            <p class="button" style="display:inline-block">
+                <a class="btn btn-primary"
+                   asp-controller="ShoppingCart"
+                   asp-action="AddToCart"
+                   asp-route-id="@Model.CakeId">Add to cart</a>
+            </p>
+
+            @if (User.IsInRole(Constants.AdministratorRole))
+            {
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-danger"
+                       asp-controller="Cake"
+                       asp-action="RemoveCake"
+                       asp-route-id="@Model.CakeId">Remove</a>
+                </p>
+
+                <p class="button" style="display:inline-block">
+                    <a class="btn btn-secondary"
+                       asp-controller="Cake"
+                       asp-action="EditCake"
+                       asp-route-id="@Model.CakeId">Edit</a>
+                </p>
+            }
+        </div>
+    </div>
+</div>
