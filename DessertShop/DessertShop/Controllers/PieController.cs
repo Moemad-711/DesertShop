@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DessertShop.Models;
 using DessertShop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DessertShop.Controllers
@@ -102,12 +104,15 @@ namespace DessertShop.Controllers
         public ViewResult EditPie(Guid id)
         {
             var pie = _pieRepository.GetPieById(id);
-            DesertViewModel pieViewModel = new DesertViewModel
+            
             {
-                Pie = pie,
-                Categories = _categoryRepository.Categories
-            };
-            return View(pieViewModel);
+                DesertViewModel pieViewModel = new DesertViewModel
+                {
+                    Pie = pie,
+                    Categories = _categoryRepository.Categories
+                };
+                return View("EditPie", pieViewModel);
+            }
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -126,6 +131,7 @@ namespace DessertShop.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public IActionResult MakePieOfTheWeek(Guid id)
         {
             var pie = _pieRepository.GetPieById(id);
@@ -145,5 +151,8 @@ namespace DessertShop.Controllers
         {
             return NotFound();
         }
+
+        
+        
     }
 }

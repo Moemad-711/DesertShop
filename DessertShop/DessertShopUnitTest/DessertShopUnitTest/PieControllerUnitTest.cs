@@ -104,6 +104,37 @@ namespace DessertShopUnitTest
             Assert.AreEqual(secondExpected, secondResult.ActionName);
         }
 
+        [Test]
+        public void EditPieTest()
+        {
+
+            var PieId = Guid.NewGuid();
+            //Arrange
+            var _pie = new Pie
+            {
+                PieId = PieId,
+                PieName = "Apple Pie",
+                Price = 10,
+                ShortDescreption = "UnitTestPie",
+                LongDescreption = "UnitTestPie",
+                PiesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
+            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
+
+            const string firstExpected = "EditPie";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _PieController.EditPie(PieId) as ViewResult;
+            //var secondResult = _PieController.EditPie(Guid.NewGuid()) as ActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ViewName);
+            //Assert.AreEqual(secondExpected, secondResult.);
+        }
+
 
 
     }   
