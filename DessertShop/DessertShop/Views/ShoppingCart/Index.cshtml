@@ -9,6 +9,8 @@
             <th>Pie</th>
             <th class="text-right">Price</th>
             <th class="text-right">Subtotal</th>
+            <th class="text-right">Add Item</th>
+            <th class="text-right">Subtract Item</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +22,16 @@
                 <td class="text-right">@line.stockitem.Price.ToString("c")</td>
                 <td class="text-right">
                     @((line.Amount * line.stockitem.Price).ToString("c"))
+                </td>
+                <td>
+                    <p class="button">
+                        <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="DecrementItems" asp-route-Id="@line.ShoppingCartItemId"> - </a>
+                    </p>
+                </td>
+                <td>
+                    <p class="button">
+                        <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="IncrementItems" asp-route-Id="@line.ShoppingCartItemId"> + </a>
+                    </p>
                 </td>
             </tr>
         }
@@ -34,8 +46,9 @@
     </tfoot>
 </table>
 
-
-<div class="text-center">
-    <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Check out now!</a>
-</div>
-
+@if (Model.ShoppingCart.ShoppingCartItems.Count > 0)
+{
+    <div class="text-center">
+        <a class="btn btn-primary" asp-controller="Order" asp-action="Checkout">Check out now!</a>
+    </div>
+}
