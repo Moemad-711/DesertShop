@@ -1,4 +1,8 @@
 using NUnit.Framework;
+using DessertShop;
+using DessertShop.Controllers;
+using DessertShop.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace DessertShopUnitTest
 {
@@ -12,7 +16,8 @@ namespace DessertShopUnitTest
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            
+           // Assert.Pass();
         }
     }
 }
