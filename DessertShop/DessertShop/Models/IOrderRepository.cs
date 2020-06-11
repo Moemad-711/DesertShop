@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DessertShop.Models
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
         void CreateOrder(Order order);
     }

@@ -6,21 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DessertShop.Models;
+using DessertShop.ViewModels;
 
 namespace DessertShop.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IPieRepository _pieRepository;
+        private readonly ICakeRepository _cakeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IPieRepository pieRepository, ICakeRepository cakeRepository)
         {
+            _pieRepository = pieRepository;
             _logger = logger;
+            _cakeRepository = cakeRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            HomeViewModel homeViewController = new HomeViewModel
+            {
+                PiesOfTheWeek = _pieRepository.PiesOfTheWeek,
+                CakesOfTheWeek = _cakeRepository.CakesOfTheWeek
+            };
+
+            return View(homeViewController);
         }
 
         public IActionResult Privacy()

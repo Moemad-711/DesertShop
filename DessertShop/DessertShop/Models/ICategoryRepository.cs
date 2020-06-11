@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DessertShop.Models
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
         public void CreateCategory(Category category);

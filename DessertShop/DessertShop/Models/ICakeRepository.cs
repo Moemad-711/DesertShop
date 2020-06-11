@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DessertShop.Models
 {
-    interface ICakeRepository
+    public interface ICakeRepository
     {
         IEnumerable<Cake> AllCakes { get; }
         IEnumerable<Cake> CakesOfTheWeek { get; }
