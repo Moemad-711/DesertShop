@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using DessertShop.Models;
 using DessertShop.ViewModels;
@@ -29,7 +30,8 @@ namespace DessertShop.Controllers
             {
                 Pies = _pieRepository.AllPies
             };
-            return View(pieViewModel);
+
+            return View("Index",pieViewModel);
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -39,7 +41,7 @@ namespace DessertShop.Controllers
             {
                 Categories = _categoryRepository.Categories
             };
-            return View(pieViewModel);
+            return View("AddPie",pieViewModel);
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -79,9 +81,19 @@ namespace DessertShop.Controllers
         [Authorize(Roles = Constants.AdministratorRole)]
         public RedirectToActionResult RemovePie(Guid id)
         {
+            
             var pie = _pieRepository.GetPieById(id);
-            _pieRepository.RemovePie(pie);
-            return RedirectToAction("Index");
+
+            
+            if (pie != null)
+            {
+                _pieRepository.RemovePie(pie);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("NotFoundAction");
+            }
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -125,6 +137,11 @@ namespace DessertShop.Controllers
                 return NotFound();
 
             return View(pie);
+        }
+
+        private IActionResult NotFoundAction()
+        {
+            return NotFound();
         }
     }
 }
