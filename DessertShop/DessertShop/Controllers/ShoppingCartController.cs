@@ -48,5 +48,17 @@ namespace DessertShop.Controllers
             }
             return RedirectToAction("Index");
         }
+        [Authorize]
+        public RedirectToActionResult DecrementItems(Guid id)
+        {
+            _shoppingCart.DecrementItems(id);
+            return RedirectToAction("Index");
+        }
+        [Authorize]
+        public RedirectToActionResult IncrementItems(Guid id)
+        {
+            _shoppingCart.IncrementItems(id);
+            return RedirectToAction("Index");
+        }
     }
 }

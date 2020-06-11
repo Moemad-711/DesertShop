@@ -119,11 +119,12 @@ namespace DessertShop.Models
             }
             _appDbContext.SaveChanges();
         }
-        public int RemoveFromCart(Pie pie)
+        public void DecrementItems(Guid id)
         {
+
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
-                        s => s.stockitem.name == pie.PieName && s.ShoppingCartId == ShoppingCartId);
+                        s => s.ShoppingCartItemId == id && s.ShoppingCartId == ShoppingCartId);
 
             var localAmount = 0;
 
@@ -142,7 +143,22 @@ namespace DessertShop.Models
 
             _appDbContext.SaveChanges();
 
-            return localAmount;
+        }
+        public void IncrementItems(Guid id)
+        {
+            var shoppingCartItem =
+                   _appDbContext.ShoppingCartItems.SingleOrDefault(
+                       s => s.ShoppingCartItemId == id && s.ShoppingCartId == ShoppingCartId);
+
+            if (shoppingCartItem != null)
+            {
+                if (shoppingCartItem.Amount > 0)
+                {
+                    shoppingCartItem.Amount++;
+                }
+            }
+
+            _appDbContext.SaveChanges();
         }
 
         public List<ShoppingCartItem> GetShoppingCartItems()
