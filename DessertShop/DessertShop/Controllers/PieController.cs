@@ -61,6 +61,7 @@ namespace DessertShop.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = Constants.AdministratorRole)]
         private string UploadedFile(Pie model)
         {
@@ -78,6 +79,7 @@ namespace DessertShop.Controllers
             }
             return uniqueFileName;
         }
+
         [Authorize(Roles = Constants.AdministratorRole)]
         public RedirectToActionResult RemovePie(Guid id)
         {

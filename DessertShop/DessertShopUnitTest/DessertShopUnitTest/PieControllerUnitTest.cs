@@ -17,21 +17,15 @@ namespace DessertShopUnitTest
         private Mock<ICategoryRepository> _CategoryRepository;
         private Mock<IWebHostEnvironment> _IWebHostEnvironment;
         private PieController _PieController;
-        private static Pie _pie;
 
         [SetUp]
         public void Setup()
         {
-            //_AppDbContext = new Mock<AppDbContext>(new DbContextOptions<AppDbContext>());
             _PieRepository = new Mock<IPieRepository>();
             _CategoryRepository = new Mock<ICategoryRepository>();
             _IWebHostEnvironment = new Mock<IWebHostEnvironment>();
 
-            _PieController = new PieController(_PieRepository.Object, _CategoryRepository.Object, _IWebHostEnvironment.Object);
-
-           
-            
-            
+            _PieController = new PieController(_PieRepository.Object, _CategoryRepository.Object, _IWebHostEnvironment.Object);            
         }
 
         [Test]
@@ -44,6 +38,7 @@ namespace DessertShopUnitTest
             Assert.AreEqual("Index", result.ViewName);
             Assert.AreEqual(expected, result.Model.ToString());
         }
+
         [Test]
         public void AddPieTest()
         {
@@ -61,7 +56,7 @@ namespace DessertShopUnitTest
             const string firstExpected = "Index";
             const string secondExpected = "AddPie";
 
-            _pie = new Pie
+            var _pie = new Pie
             {
                 PieId = Guid.NewGuid(),
                 PieName = "Apple Pie",
@@ -84,7 +79,7 @@ namespace DessertShopUnitTest
             
             var PieId = Guid.NewGuid();
             //Arrange
-            _pie = new Pie
+            var _pie = new Pie
             {
                 PieId = PieId,
                 PieName = "Apple Pie",
@@ -93,6 +88,7 @@ namespace DessertShopUnitTest
                 LongDescreption = "UnitTestPie",
                 PiesOfTheWeek = true
             };
+
             //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
             _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie); 
 
@@ -107,6 +103,7 @@ namespace DessertShopUnitTest
             Assert.AreEqual(firstExpected, firstResult.ActionName);
             Assert.AreEqual(secondExpected, secondResult.ActionName);
         }
+
 
 
     }   
