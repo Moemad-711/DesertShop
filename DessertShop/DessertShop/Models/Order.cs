@@ -4,16 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace DessertShop.Models
 {
     public class Order
     {
         [BindNever]
+        [Key]
         public int OrderId { get; set; }
-
         public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 

@@ -34,7 +34,7 @@ namespace DessertShop.Models
 
             var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.UserId == currentUserId);
 
             if (shoppingCart != null)
             {
@@ -46,7 +46,8 @@ namespace DessertShop.Models
                 shoppingCart = new ShoppingCart
                 {
                     ShoppingCartId = Guid.NewGuid().ToString(),
-                    User =  await userManager.FindByIdAsync(currentUserId)
+                    User = await userManager.FindByIdAsync(currentUserId),
+                    
 
                 };
                 _appDbContext.ShoppingCarts.Add(shoppingCart);
@@ -72,6 +73,7 @@ namespace DessertShop.Models
                 {
                     ShoppingCartId = shoppingCart.ShoppingCartId,
                     stockitem = stockItem,
+                    stockitemId = stockItem.id,
                     Amount = 1
                 };
 

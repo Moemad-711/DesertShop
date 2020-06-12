@@ -15,8 +15,8 @@ namespace DessertShop.Models
     {
         [Key]
         public string ShoppingCartId { get; set; }
-
-        [ForeignKey("UserId")]
+        public string UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }     
