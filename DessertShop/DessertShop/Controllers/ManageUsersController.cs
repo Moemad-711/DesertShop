@@ -14,8 +14,7 @@ namespace DessertShop.Controllers
         private readonly UserManager<IdentityUser>
             _userManager;
 
-        public ManageUsersController(
-            UserManager<IdentityUser> userManager)
+        public ManageUsersController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
         }
@@ -34,7 +33,7 @@ namespace DessertShop.Controllers
                 Everyone = everyone
             };
 
-            return View(model);
+            return View("Index",model);
         }
     }
 }
