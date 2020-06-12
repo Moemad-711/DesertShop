@@ -11,6 +11,8 @@ namespace DessertShop.Models
     {
         [Key]
         public Guid ShoppingCartItemId { get; set; }
+        public Guid stockitemId { get; set; }
+        [ForeignKey(nameof(stockitemId))]
         public StockItem stockitem { get; set; }
         public int Amount { get; set; }
         public String ShoppingCartId { get; set; }
