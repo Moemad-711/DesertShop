@@ -12,39 +12,45 @@ namespace DessertShop.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly IPieRepository _pieRepository;
-        private readonly ShoppingCart _shoppingCart;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly ICakeRepository _cakeRepository;
-        public ShoppingCartController(IPieRepository pieRepository, ICakeRepository cakeRepository, ShoppingCart shoppingCart)
+        public ShoppingCartController(IPieRepository pieRepository, ICakeRepository cakeRepository, IShoppingCartRepository shoppingCartRepository)
         {
             _pieRepository = pieRepository;
             _cakeRepository = cakeRepository;
-            _shoppingCart = shoppingCart;
+            _shoppingCartRepository = shoppingCartRepository;
         }
-        public ViewResult Index()
+        public async Task<ViewResult> IndexAsync()
         {
-            var items = _shoppingCart.GetShoppingCartItems();
-            _shoppingCart.ShoppingCartItems = items;
+            var shoppingCart = await _shoppingCartRepository.GetCartAsync();
+
+            var items = _shoppingCartRepository.GetShoppingCartItems(shoppingCart);
+
+            shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {
-                ShoppingCart = _shoppingCart,
-                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
+                ShoppingCart = shoppingCart,
+                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart)
             };
 
             return View(shoppingCartViewModel);
         }
         [Authorize]
-        public RedirectToActionResult AddToCart(Guid id)
+        public async Task<RedirectToActionResult> AddToCartAsync(Guid id)
         {
+            var shoppingCart = await _shoppingCartRepository.GetCartAsync();
+
             var pie = _pieRepository.GetPieById(id);
             var cake = _cakeRepository.GetCakeById(id);
+
             if (pie != null)
             {
-                _shoppingCart.AddToCart(pie, 1);
+                _shoppingCartRepository.AddToCart(pie, shoppingCart, 1);
             }
             else if (cake != null)
             {
-                _shoppingCart.AddToCart(cake, 1);
+                _shoppingCartRepository.AddToCart(cake, shoppingCart, 1);
             }
             return RedirectToAction("Index");
         }
