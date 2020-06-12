@@ -31,17 +31,18 @@ namespace DessertShop.Controllers
                 CakesOfTheWeek = _cakeRepository.CakesOfTheWeek
             };
 
-            return View(homeViewController);
+            return View("Index",homeViewController);
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Privacy");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+          
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
