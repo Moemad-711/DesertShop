@@ -34,7 +34,10 @@ namespace DessertShop.Controllers
                 ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart)
             };
 
-            return View(shoppingCartViewModel);
+            ViewData["shoppingCart"] = shoppingCart;
+            //ViewData["shoppingCartModel"] = shoppingCartViewModel;
+
+            return View("Index", shoppingCartViewModel);
         }
         [Authorize]
         public async Task<RedirectToActionResult> AddToCartAsync(Guid id)
