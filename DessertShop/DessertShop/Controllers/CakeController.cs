@@ -119,12 +119,18 @@ namespace DessertShop.Controllers
                 var the_cake = _CakeRepository.GetCakeById(cake.CakeId);
                 if (the_cake != null)
                     _CakeRepository.EditCake(the_cake, cake);
+                else
+                    return RedirectToAction("NotFoundAction");
             }
             return RedirectToAction("Index");
         }
         public IActionResult MakeCakeOfTheWeek(Guid id)
         {
             var cake = _CakeRepository.GetCakeById(id);
+            if (cake == null)
+            {
+                return RedirectToAction("NotFoundAction");
+            }
             _CakeRepository.MakeCakeOfTheWeek(cake);
             return RedirectToAction("Index");
         }
@@ -132,9 +138,9 @@ namespace DessertShop.Controllers
         {
             var cake = _CakeRepository.GetCakeById(id);
             if (cake == null)
-                return NotFound();
+                return RedirectToAction("NotFoundAction");
 
-            return View(cake);
+            return View("Details",cake);
         }
         private IActionResult NotFoundAction()
         {

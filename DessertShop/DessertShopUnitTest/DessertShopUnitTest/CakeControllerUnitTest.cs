@@ -80,7 +80,7 @@ namespace DessertShopUnitTest
             //Arrange
             var _cake = new Cake
             {
-                CakeId = Guid.NewGuid(),
+                CakeId = CakeId,
                 CakeName = "Chocolate cake",
                 Price = 10,
                 ShortDescreption = "UnitTestCake",
@@ -88,7 +88,7 @@ namespace DessertShopUnitTest
                 CakesOfTheWeek = true
             };
 
-            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _pie
+            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _cake
             _CakeRepository.Setup(expression: p => p.GetCakeById(CakeId)).Returns(_cake);
 
             const string firstExpected = "Index";
@@ -111,7 +111,7 @@ namespace DessertShopUnitTest
             //Arrange
             var _cake = new Cake
             {
-                CakeId = Guid.NewGuid(),
+                CakeId = CakeId,
                 CakeName = "Chocolate cake ",
                 Price = 10,
                 ShortDescreption = "UnitTestCake",
@@ -119,19 +119,108 @@ namespace DessertShopUnitTest
                 CakesOfTheWeek = true
             };
 
-            //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
+            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _cake
             _CakeRepository.Setup(expression: p => p.GetCakeById(CakeId)).Returns(_cake);
 
             const string firstExpected = "EditCake";
-            //const string secondExpected = "NotFoundAction";
+           // const string secondExpected = "NotFoundAction";
 
             //Act
             var firstResult = _CakeController.EditCake(CakeId) as ViewResult;
-            //var secondResult = _CakeController.EditCake(Guid.NewGuid()) as ActionResult;
+           // var secondResult = _CakeController.EditCake(Guid.NewGuid()) as ActionResult;
 
             //Assert
             Assert.AreEqual(firstExpected, firstResult.ViewName);
             //Assert.AreEqual(secondExpected, secondResult.);
+        }
+        [Test]
+        public void EditCakePostTest()
+        {
+            var CakeId = Guid.NewGuid();
+            //Arrange
+            var _cake = new Cake
+            {
+                CakeId = CakeId,
+                CakeName = "Chocolate cake ",
+                Price = 10,
+                ShortDescreption = "UnitTestCake",
+                LongDescreption = "UnitTestCake",
+                CakesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _cake
+            _CakeRepository.Setup(expression: p => p.GetCakeById(CakeId)).Returns(_cake);
+
+            const string firstExpected = "Index";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _CakeController.EditCake(_cake) as RedirectToActionResult;
+            var secondResult = _CakeController.EditCake(new Cake()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ActionName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
+        }
+
+        [Test]
+        public void MakeCakeOfTheWeekTest()
+        {
+             var CakeId = Guid.NewGuid();
+            //Arrange
+            var _cake = new Cake
+            {
+                CakeId = CakeId,
+                CakeName = "Chocolate cake ",
+                Price = 10,
+                ShortDescreption = "UnitTestCake",
+                LongDescreption = "UnitTestCake",
+                CakesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _cake
+            _CakeRepository.Setup(expression: p => p.GetCakeById(CakeId)).Returns(_cake);
+
+            const string firstExpected = "Index";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _CakeController.MakeCakeOfTheWeek(CakeId) as RedirectToActionResult;
+            var secondResult = _CakeController.MakeCakeOfTheWeek(Guid.NewGuid()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ActionName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
+        }
+
+        [Test]
+        public void DetailsTest()
+        {
+            var CakeId = Guid.NewGuid();
+            //Arrange
+            var _cake = new Cake
+            {
+                CakeId = CakeId,
+                CakeName = "Chocolate cake ",
+                Price = 10,
+                ShortDescreption = "UnitTestCake",
+                LongDescreption = "UnitTestCake",
+                CakesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetCakeByID with CakeID return _cake
+            _CakeRepository.Setup(expression: p => p.GetCakeById(CakeId)).Returns(_cake);
+
+            const string firstExpected = "Details";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _CakeController.Details(CakeId) as ViewResult;
+            var secondResult = _CakeController.Details(Guid.NewGuid()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ViewName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
         }
     }
 }
