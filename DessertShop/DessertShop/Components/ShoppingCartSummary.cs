@@ -21,13 +21,13 @@ namespace DessertShop.Components
         {
             var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
-            var items = _shoppingCartRepository.GetShoppingCartItems(shoppingCart);
+            var items = _shoppingCartRepository.GetShoppingCartItems();
             shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {
                 ShoppingCart = shoppingCart,
-                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart)
+                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal()
 
             };
             return View(shoppingCartViewModel);

@@ -9,12 +9,12 @@ namespace DessertShop.Models
     {
         public  Task<ShoppingCart> GetCartAsync();
 
-        public void AddToCart(Pie pie, ShoppingCart shoppingCart, int amount);
-        public void AddToCart(Cake cake, ShoppingCart shoppingCart, int amount);
-        public int RemoveFromCart(Pie pie, ShoppingCart shoppingCart);
-        public List<ShoppingCartItem> GetShoppingCartItems(ShoppingCart shoppingCarts);
-        public void ClearCart(ShoppingCart shoppingCart);
-        public decimal GetShoppingCartTotal(ShoppingCart shoppingCart);
+        public void AddToCart(Pie pie, int amount);
+        public void AddToCart(Cake cake, int amount);
+        public int RemoveFromCart(Pie pie);
+        public List<ShoppingCartItem> GetShoppingCartItems();
+        public void ClearCart();
+        public decimal GetShoppingCartTotal();
 
     }
 

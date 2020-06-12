@@ -39,6 +39,9 @@ namespace DessertShop.Models
             if (shoppingCart != null)
             {
                 string cartId = shoppingCart.ShoppingCartId;
+                session.SetString("CartId", shoppingCart.ShoppingCartId);
+                return shoppingCart;
+
             }
             else
             {
@@ -51,15 +54,21 @@ namespace DessertShop.Models
                 };
                 _appDbContext.ShoppingCarts.Add(shoppingCart);
                 _appDbContext.SaveChanges();
+                session.SetString("CartId", shoppingCart.ShoppingCartId);
+                return shoppingCart;
             }
 
-            session.SetString("CartId", shoppingCart.ShoppingCartId);
 
-            return new ShoppingCart() { ShoppingCartId = shoppingCart.ShoppingCartId };
         }
 
-        public void AddToCart(Pie pie, ShoppingCart shoppingCart, int amount)
+        public void AddToCart(Pie pie, int amount)
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
                         s => s.stockitem.name == pie.PieName && s.ShoppingCartId == shoppingCart.ShoppingCartId);
@@ -84,8 +93,14 @@ namespace DessertShop.Models
             _appDbContext.SaveChanges();
         }
 
-        public void AddToCart(Cake cake, ShoppingCart shoppingCart, int amount)
+        public void AddToCart(Cake cake, int amount)
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
                         s => s.stockitem.name == cake.CakeName && s.ShoppingCartId == shoppingCart.ShoppingCartId);
@@ -111,8 +126,14 @@ namespace DessertShop.Models
             _appDbContext.SaveChanges();
         }
 
-        public int RemoveFromCart(Pie pie, ShoppingCart shoppingCart)
+        public int RemoveFromCart(Pie pie)
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             var shoppingCartItem =
                     _appDbContext.ShoppingCartItems.SingleOrDefault(
                         s => s.stockitem.name == pie.PieName && s.ShoppingCartId == shoppingCart.ShoppingCartId);
@@ -137,8 +158,14 @@ namespace DessertShop.Models
             return localAmount;
         }
 
-        public List<ShoppingCartItem> GetShoppingCartItems(ShoppingCart shoppingCart)
+        public List<ShoppingCartItem> GetShoppingCartItems()
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             return shoppingCart.ShoppingCartItems ??
                    (shoppingCart.ShoppingCartItems =
                        _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == shoppingCart.ShoppingCartId)
@@ -146,8 +173,14 @@ namespace DessertShop.Models
                            .ToList());
         }
 
-        public void ClearCart(ShoppingCart shoppingCart)
+        public void ClearCart()
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             var cartItems = _appDbContext
                 .ShoppingCartItems
                 .Where(cart => cart.ShoppingCartId == shoppingCart.ShoppingCartId);
@@ -157,8 +190,14 @@ namespace DessertShop.Models
             _appDbContext.SaveChanges();
         }
 
-        public decimal GetShoppingCartTotal(ShoppingCart shoppingCart)
+        public decimal GetShoppingCartTotal()
         {
+            var httpContext = httpContextAccessor.HttpContext;
+
+            var currentUserId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var shoppingCart = _appDbContext.ShoppingCarts.FirstOrDefault(s => s.User.Id == currentUserId);
+
             var total = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == shoppingCart.ShoppingCartId)
                 .Select(c => c.stockitem.Price * c.Amount).Sum();
             return total;

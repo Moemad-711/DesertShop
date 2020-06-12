@@ -33,7 +33,7 @@ namespace DessertShop.Models
                 order.UserId = currentUserId;
 
                 var shoppingCartItems = shoppingCart.ShoppingCartItems;
-                order.OrderTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart);
+                order.OrderTotal = _shoppingCartRepository.GetShoppingCartTotal();
 
                 order.OrderDetails = new List<OrderDetail>();
                 //adding the order with its details
