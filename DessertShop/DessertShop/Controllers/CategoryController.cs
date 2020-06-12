@@ -22,13 +22,13 @@ namespace DessertShop.Controllers
             {
                 Categories = _categoryRepository.Categories
             };
-            return View(DesertViewModel);
+            return View("Index",DesertViewModel);
           
         }
         [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddCategory()
         {
-            return View();
+            return View("AddCategory");
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
