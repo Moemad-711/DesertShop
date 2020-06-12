@@ -25,7 +25,8 @@ namespace DessertShopUnitTest
             _CategoryRepository = new Mock<ICategoryRepository>();
             _IWebHostEnvironment = new Mock<IWebHostEnvironment>();
 
-            _PieController = new PieController(_PieRepository.Object, _CategoryRepository.Object, _IWebHostEnvironment.Object);            
+            _PieController = new PieController(_PieRepository.Object, _CategoryRepository.Object, _IWebHostEnvironment.Object);
+
         }
 
         [Test]
@@ -76,7 +77,7 @@ namespace DessertShopUnitTest
         [Test]
         public void RemovePieTest()
         {
-            
+
             var PieId = Guid.NewGuid();
             //Arrange
             var _pie = new Pie
@@ -90,7 +91,7 @@ namespace DessertShopUnitTest
             };
 
             //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
-            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie); 
+            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
 
             const string firstExpected = "Index";
             const string secondExpected = "NotFoundAction";
@@ -107,9 +108,9 @@ namespace DessertShopUnitTest
         [Test]
         public void EditPieTest()
         {
-
-            var PieId = Guid.NewGuid();
             //Arrange
+            var PieId = Guid.NewGuid();
+
             var _pie = new Pie
             {
                 PieId = PieId,
@@ -136,6 +137,100 @@ namespace DessertShopUnitTest
         }
 
 
+        [Test]
+        public void EditPiePostTest()
+        {
+            //Arrange
+            var PieId = Guid.NewGuid();
+
+            var _pie = new Pie
+            {
+                PieId = PieId,
+                PieName = "Apple Pie",
+                Price = 10,
+                ShortDescreption = "UnitTestPie",
+                LongDescreption = "UnitTestPie",
+                PiesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
+            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
+
+            const string firstExpected = "Index";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _PieController.EditPie(_pie) as RedirectToActionResult;
+            var secondResult = _PieController.EditPie(new Pie()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ActionName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
+        }
+
+        [Test]
+        public void MakePieOfTheWeekTest()
+        {
+            //Arrange
+            var PieId = Guid.NewGuid();
+
+            var _pie = new Pie
+            {
+                PieId = PieId,
+                PieName = "Apple Pie",
+                Price = 10,
+                ShortDescreption = "UnitTestPie",
+                LongDescreption = "UnitTestPie",
+                PiesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
+            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
+
+            const string firstExpected = "Index";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _PieController.MakePieOfTheWeek(PieId) as RedirectToActionResult;
+            var secondResult = _PieController.MakePieOfTheWeek(Guid.NewGuid()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ActionName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
+        }
+
+        [Test]
+        public void DetailsTest()
+        {
+            //Arrange
+            var PieId = Guid.NewGuid();
+
+            var _pie = new Pie
+            {
+                PieId = PieId,
+                PieName = "Apple Pie",
+                Price = 10,
+                ShortDescreption = "UnitTestPie",
+                LongDescreption = "UnitTestPie",
+                PiesOfTheWeek = true
+            };
+
+            //this tells the mock repository when an invoke of GetPieByID with PieID return _pie
+            _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
+
+            const string firstExpected = "Details";
+            const string secondExpected = "NotFoundAction";
+
+            //Act
+            var firstResult = _PieController.Details(PieId) as ViewResult;
+            var secondResult = _PieController.Details(Guid.NewGuid()) as RedirectToActionResult;
+
+            //Assert
+            Assert.AreEqual(firstExpected, firstResult.ViewName);
+            Assert.AreEqual(secondExpected, secondResult.ActionName);
+        }
+
+        
 
     }   
 }

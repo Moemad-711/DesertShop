@@ -128,13 +128,20 @@ namespace DessertShop.Controllers
                 var the_pie = _pieRepository.GetPieById(pie.PieId);
                 if (the_pie != null)
                     _pieRepository.EditPie(the_pie, pie);
+                else
+                    return RedirectToAction("NotFoundAction");
             }
             return RedirectToAction("Index");
         }
 
         public IActionResult MakePieOfTheWeek(Guid id)
         {
+            
             var pie = _pieRepository.GetPieById(id);
+            if(pie == null)
+            {
+                return RedirectToAction("NotFoundAction");
+            }
             _pieRepository.MakePieOfTheWeek(pie);
             return RedirectToAction("Index");
         }
@@ -142,9 +149,9 @@ namespace DessertShop.Controllers
         {
             var pie = _pieRepository.GetPieById(id);
             if (pie == null)
-                return NotFound();
+                return RedirectToAction("NotFoundAction");
 
-            return View(pie);
+            return View("Details", pie);
         }
 
         private IActionResult NotFoundAction()
