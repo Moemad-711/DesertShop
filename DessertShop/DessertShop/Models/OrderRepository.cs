@@ -11,18 +11,19 @@ namespace DessertShop.Models
         public class OrderRepository : IOrderRepository
         {
             private readonly AppDbContext _appDbContext;
-            private readonly ShoppingCart _shoppingCart;
+            private readonly IShoppingCartRepository _shoppingCartRepository;
             private readonly IHttpContextAccessor _httpContextAccessor;
 
-            public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart, IHttpContextAccessor httpContextAccessor)
+            public OrderRepository(AppDbContext appDbContext, IShoppingCartRepository shoppingCartRepository, IHttpContextAccessor httpContextAccessor)
             {
                 _appDbContext = appDbContext;
-                _shoppingCart = shoppingCart;
+                _shoppingCartRepository = shoppingCartRepository;
                 _httpContextAccessor = httpContextAccessor;
             }
 
-            public void CreateOrder(Order order)
+            public async Task CreateOrderAsync(Order order)
             {
+                var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
                 order.OrderPlaced = DateTime.Now;
 
@@ -31,8 +32,8 @@ namespace DessertShop.Models
 
                 order.UserId = currentUserId;
 
-                var shoppingCartItems = _shoppingCart.ShoppingCartItems;
-                order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+                var shoppingCartItems = shoppingCart.ShoppingCartItems;
+                order.OrderTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart);
 
                 order.OrderDetails = new List<OrderDetail>();
                 //adding the order with its details

@@ -10,23 +10,24 @@ namespace DessertShop.Components
 {
     public class ShoppingCartSummary : ViewComponent
     {
-        private readonly ShoppingCart _shoppingCart;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
 
-        public ShoppingCartSummary(ShoppingCart shoppingCart)
+        public ShoppingCartSummary(IShoppingCartRepository shoppingCartRepository)
         {
-            _shoppingCart = shoppingCart;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
+            var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
-            var items = _shoppingCart.GetShoppingCartItems();
-            _shoppingCart.ShoppingCartItems = items;
+            var items = _shoppingCartRepository.GetShoppingCartItems(shoppingCart);
+            shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {
-                ShoppingCart = _shoppingCart,
-                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
+                ShoppingCart = shoppingCart,
+                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart)
 
             };
             return View(shoppingCartViewModel);

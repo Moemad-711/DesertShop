@@ -7,6 +7,6 @@ namespace DessertShop.Models
 {
     public interface IOrderRepository
     {
-        void CreateOrder(Order order);
+        public Task CreateOrderAsync(Order order);
     }
 }
