@@ -45,8 +45,8 @@ namespace DessertShop.Controllers
         {
             var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
-            var pie = _pieRepository.GetPieById(id);
-            var cake = _cakeRepository.GetCakeById(id);
+            Pie pie = _pieRepository.GetPieById(id);
+            Cake cake = _cakeRepository.GetCakeById(id);
 
             if (pie != null)
             {

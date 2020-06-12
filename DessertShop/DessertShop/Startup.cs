@@ -42,6 +42,7 @@ namespace DessertShop
             services.AddScoped<ICakeRepository, CakeRepository>();
             services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IManageUsers, ManageUsers>();
 
             services.AddControllersWithViews();
 

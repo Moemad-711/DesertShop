@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DessertShop.Models;
 using DessertShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,20 +12,18 @@ namespace DessertShop.Controllers
 {
     public class ManageUsersController : Controller
     {
-        private readonly UserManager<IdentityUser>
-            _userManager;
+        private readonly IManageUsers _manageUsers;
 
-        public ManageUsersController(UserManager<IdentityUser> userManager)
+        public ManageUsersController(IManageUsers manageUsers)
         {
-            _userManager = userManager;
+            _manageUsers = manageUsers;
         }
 
         public async Task<IActionResult> Index()
         {
-            var admins = (await _userManager
-                .GetUsersInRoleAsync("Administrator")).ToArray();
+            var admins = (await _manageUsers.GetUsersInRoleAsync(Constants.AdministratorRole)).ToArray();
 
-            var everyone = await _userManager.Users.ToArrayAsync();
+            var everyone =  _manageUsers.GetUsers().ToArray();
 
             var model = new ManageUsersViewModel
             {

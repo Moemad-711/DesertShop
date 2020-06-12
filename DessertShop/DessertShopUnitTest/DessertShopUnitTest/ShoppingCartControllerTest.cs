@@ -35,7 +35,7 @@ namespace DessertShopUnitTest
         }
 
         [Test]
-        public async Task ndexAsyncTestAsync()
+        public async Task IndexAsyncTestAsync()
         {
             //arrange 
             string expected = "Index";
@@ -50,20 +50,14 @@ namespace DessertShopUnitTest
                 ShoppingCartItems.Add(new ShoppingCartItem());
             }
 
-            IdentityUser indentityUser = new IdentityUser
-            {
-                Id = userId
-            };
-
             ShoppingCart shoppingCart = new ShoppingCart
             {
                 ShoppingCartId = shoppingCartId,
                 ShoppingCartItems = ShoppingCartItems,
-                User = indentityUser
+                User = new IdentityUser()
 
             };
 
-            mockUserManger.Setup( um => um.FindByIdAsync(userId)).ReturnsAsync(indentityUser);
             mockShoppingCartRepository.Setup(sc => sc.GetCartAsync()).ReturnsAsync(shoppingCart);
 
             //act
@@ -71,10 +65,54 @@ namespace DessertShopUnitTest
 
             Assert.AreEqual(expected, result.ViewName);
             Assert.AreEqual(shoppingCart, result.ViewData["shoppingCart"]);
-
         }
 
+        [Test]
+        public async Task AddToCartAsyncTestAsync()
+        {
+            //arrange 
+            string expected = "Index";
 
+            string shoppingCartId = Guid.NewGuid().ToString();
+            Guid cakeId = Guid.NewGuid();
+            Guid pieId = Guid.NewGuid();
+
+            List<ShoppingCartItem> ShoppingCartItems = new List<ShoppingCartItem>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                ShoppingCartItems.Add(new ShoppingCartItem());
+            }
+
+            ShoppingCart shoppingCart = new ShoppingCart
+            {
+                ShoppingCartId = shoppingCartId,
+                ShoppingCartItems = ShoppingCartItems,
+                User = new IdentityUser()
+
+            };
+
+            Cake cake = new Cake
+            {
+                CakeId = cakeId
+            };
+
+            Pie pie = new Pie
+            {
+                PieId = pieId
+            };
+
+            mockShoppingCartRepository.Setup(sc => sc.GetCartAsync()).ReturnsAsync(shoppingCart);
+
+            mockCakeRepository.Setup(c => c.GetCakeById(cakeId)).Returns(cake);
+
+            mockPieRepository.Setup(c => c.GetPieById(pieId)).Returns(pie);
+            //act
+            var result = await shoppingCartController.AddToCartAsync(pieId) as RedirectToActionResult;
+
+            Assert.AreEqual(expected, result.ActionName);
+
+        }
 
     }
 }

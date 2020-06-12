@@ -1,37 +1,30 @@
 ﻿using DessertShop.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DessertShop.Models;
 
 namespace DessertShopUnitTest
 {
     class ManageUserControllerTest
     {
-        private Mock<UserManager<IdentityUser>> mockUserManger;
-
+        private Mock<IManageUsers> mockManageUsers;
         private ManageUsersController manageUsersController;
 
         [SetUp]
         public void Setup()
         {
-            mockUserManger = new Mock<UserManager<IdentityUser>>(
-                    new Mock<IUserStore<IdentityUser>>().Object,
-                    new Mock<IOptions<IdentityOptions>>().Object,
-                    new Mock<IPasswordHasher<IdentityUser>>().Object,
-                    new IUserValidator<IdentityUser>[0],
-                    new IPasswordValidator<IdentityUser>[0],
-                    new Mock<ILookupNormalizer>().Object,
-                    new Mock<IdentityErrorDescriber>().Object,
-                    new Mock<IServiceProvider>().Object,
-                    new Mock<ILogger<UserManager<IdentityUser>>>().Object);
-            manageUsersController = new ManageUsersController(mockUserManger.Object);
+            mockManageUsers = new Mock<IManageUsers>();
+            manageUsersController = new ManageUsersController(mockManageUsers.Object);
         }
         [Test]
         public async Task Index()
@@ -45,11 +38,18 @@ namespace DessertShopUnitTest
                 Id = userId
             };
 
+
+            List<IdentityUser> admins = new List<IdentityUser>();
+            admins.Add(user);
+
             List<IdentityUser> users = new List<IdentityUser>();
             users.Add(user);
-            mockUserManger.Setup(um => um.CreateAsync(user, "Moemad@admin123"));
-            mockUserManger.Setup(um => um.AddToRoleAsync(user, "Administrator"));
-            mockUserManger.Setup(um => um.GetUsersInRoleAsync("Administrator")).ReturnsAsync(users);
+            users.Add(new IdentityUser());
+            users.Add(new IdentityUser()); users.Add(new IdentityUser());
+
+            mockManageUsers.Setup(mu => mu.GetUsers()).Returns(users);
+
+            mockManageUsers.Setup(mu => mu.GetUsersInRoleAsync(Constants.AdministratorRole)).ReturnsAsync(admins);
 
             var result = await manageUsersController.Index() as ViewResult;
 
