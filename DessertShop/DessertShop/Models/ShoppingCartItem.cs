@@ -16,7 +16,7 @@ namespace DessertShop.Models
         public StockItem stockitem { get; set; }
         public int Amount { get; set; }
         public String ShoppingCartId { get; set; }
-        [ForeignKey(nameof(stockitemId))]
+        [ForeignKey(nameof(ShoppingCartId))]
         public ShoppingCart ShoppingCart { get; set; }
     }
 }
