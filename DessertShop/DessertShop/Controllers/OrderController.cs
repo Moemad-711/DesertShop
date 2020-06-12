@@ -20,7 +20,7 @@ namespace DessertShop.Controllers
 
         public IActionResult Checkout()
         {
-            return View();
+            return View("Checkout");
         }
 
         [HttpPost]
@@ -43,14 +43,13 @@ namespace DessertShop.Controllers
                 return RedirectToAction("CheckoutComplete");
             }
 
-
-            return View(order);
+            return View("Checkout", order);
         }
 
         public IActionResult CheckoutComplete()
         {
             ViewBag.CheckoutCompleteMessage = "Thanks for your order. You'll soon enjoy our delicious pies!";
-            return View();
+            return View("CheckoutComplete");
         }
     }
 }

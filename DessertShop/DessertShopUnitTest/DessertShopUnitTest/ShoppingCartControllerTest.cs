@@ -41,7 +41,6 @@ namespace DessertShopUnitTest
             string expected = "Index";
 
             string shoppingCartId = Guid.NewGuid().ToString();
-            string userId = Guid.NewGuid().ToString();
 
             List<ShoppingCartItem> ShoppingCartItems =  new List<ShoppingCartItem>();
 
