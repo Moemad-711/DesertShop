@@ -58,7 +58,8 @@ namespace DessertShopUnitTest
             ShoppingCart shoppingCart = new ShoppingCart
             {
                 ShoppingCartId = shoppingCartId,
-                ShoppingCartItems = ShoppingCartItems
+                ShoppingCartItems = ShoppingCartItems,
+                User = indentityUser
 
             };
 

@@ -20,6 +20,7 @@ namespace DessertShop.Controllers
             _cakeRepository = cakeRepository;
             _shoppingCartRepository = shoppingCartRepository;
         }
+        [Authorize]
         public async Task<ViewResult> IndexAsync()
         {
             var shoppingCart = await _shoppingCartRepository.GetCartAsync();
