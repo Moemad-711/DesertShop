@@ -22,8 +22,7 @@ namespace DessertShop.Controllers
         public async Task<IActionResult> Index()
         {
             var admins = (await _userManager
-                .GetUsersInRoleAsync("Administrator"))
-                .ToArray();
+                .GetUsersInRoleAsync("Administrator")).ToArray();
 
             var everyone = await _userManager.Users.ToArrayAsync();
 
