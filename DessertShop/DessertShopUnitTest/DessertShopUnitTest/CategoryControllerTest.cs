@@ -50,7 +50,7 @@ namespace DessertShopUnitTest
             var _category = new Category
             {
                 CategoryId=12345 ,
-                CategoryName="categorey"
+                CategoryName="category"
             };
             var result = _CategoryController.AddCategory(_category) as RedirectToActionResult;
 
