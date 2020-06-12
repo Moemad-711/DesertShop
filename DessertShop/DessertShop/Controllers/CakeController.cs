@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using DessertShop.Models;
 using DessertShop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DessertShop.Controllers
@@ -29,7 +32,7 @@ namespace DessertShop.Controllers
             {
                 Cakes = _CakeRepository.AllCakes
             };
-            return View(CakeViewModel);
+            return View("Index",CakeViewModel);
         }
         [Authorize(Roles = Constants.AdministratorRole)]
         public ViewResult AddCake()
@@ -38,7 +41,7 @@ namespace DessertShop.Controllers
             {
                 Categories = _categoryRepository.Categories
             };
-            return View(CakeViewModel);
+            return View("AddCake",CakeViewModel);
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -80,8 +83,15 @@ namespace DessertShop.Controllers
         public RedirectToActionResult RemoveCake(Guid id)
         {
             var cake = _CakeRepository.GetCakeById(id);
-            _CakeRepository.RemoveCake(cake);
-            return RedirectToAction("Index");
+            if (cake != null)
+            {
+                _CakeRepository.RemoveCake(cake);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("NotFoundAction");
+            }
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -93,7 +103,7 @@ namespace DessertShop.Controllers
                 Cake = cake,
                 Categories = _categoryRepository.Categories
             };
-            return View(CakeViewModel);
+            return View("EditCake",CakeViewModel);
         }
 
         [Authorize(Roles = Constants.AdministratorRole)]
@@ -125,6 +135,10 @@ namespace DessertShop.Controllers
                 return NotFound();
 
             return View(cake);
+        }
+        private IActionResult NotFoundAction()
+        {
+            return NotFound();
         }
     }
 }

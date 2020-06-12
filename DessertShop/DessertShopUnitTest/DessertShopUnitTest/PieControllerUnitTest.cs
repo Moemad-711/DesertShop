@@ -124,7 +124,7 @@ namespace DessertShopUnitTest
             _PieRepository.Setup(expression: p => p.GetPieById(PieId)).Returns(_pie);
 
             const string firstExpected = "EditPie";
-            const string secondExpected = "NotFoundAction";
+            //const string secondExpected = "NotFoundAction";
 
             //Act
             var firstResult = _PieController.EditPie(PieId) as ViewResult;
