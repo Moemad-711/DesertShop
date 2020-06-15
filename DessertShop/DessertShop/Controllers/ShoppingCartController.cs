@@ -25,14 +25,14 @@ namespace DessertShop.Controllers
         {
             var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
-            var items = _shoppingCartRepository.GetShoppingCartItems(shoppingCart);
+            var items = _shoppingCartRepository.GetShoppingCartItems();
 
             shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {
                 ShoppingCart = shoppingCart,
-                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal(shoppingCart)
+                ShoppingCartTotal = _shoppingCartRepository.GetShoppingCartTotal()
             };
 
             ViewData["shoppingCart"] = shoppingCart;
@@ -50,11 +50,11 @@ namespace DessertShop.Controllers
 
             if (pie != null)
             {
-                _shoppingCartRepository.AddToCart(pie, shoppingCart, 1);
+                _shoppingCartRepository.AddToCart(pie, 1);
             }
             else if (cake != null)
             {
-                _shoppingCartRepository.AddToCart(cake, shoppingCart, 1);
+                _shoppingCartRepository.AddToCart(cake, 1);
             }
             return RedirectToAction("Index");
         }

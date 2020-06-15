@@ -28,7 +28,7 @@ namespace DessertShop.Controllers
         {
             var shoppingCart = await _shoppingCartRepository.GetCartAsync();
 
-            var items = _shoppingCartRepository.GetShoppingCartItems(shoppingCart);
+            var items = _shoppingCartRepository.GetShoppingCartItems();
             shoppingCart.ShoppingCartItems = items;
 
             if (shoppingCart.ShoppingCartItems.Count == 0)
@@ -39,7 +39,7 @@ namespace DessertShop.Controllers
             if (ModelState.IsValid)
             {
                 await _orderRepository.CreateOrderAsync(order);
-                _shoppingCartRepository.ClearCart(shoppingCart);
+                _shoppingCartRepository.ClearCart();
                 return RedirectToAction("CheckoutComplete");
             }
 
