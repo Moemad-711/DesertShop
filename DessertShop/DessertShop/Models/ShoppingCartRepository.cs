@@ -46,9 +46,14 @@ namespace DessertShop.Models
                 shoppingCart = new ShoppingCart
                 {
                     ShoppingCartId = Guid.NewGuid().ToString(),
+<<<<<<< Updated upstream
                     User = await userManager.FindByIdAsync(currentUserId),
                     
 
+=======
+                    User =  await userManager.FindByIdAsync(currentUserId),
+                    UserId = currentUserId
+>>>>>>> Stashed changes
                 };
                 _appDbContext.ShoppingCarts.Add(shoppingCart);
                 _appDbContext.SaveChanges();

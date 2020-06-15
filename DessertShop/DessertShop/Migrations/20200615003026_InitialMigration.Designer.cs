@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DessertShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200611104606_initialMigration")]
-    partial class initialMigration
+    [Migration("20200615003026_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,8 @@ namespace DessertShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CakeId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Cakes");
                 });
@@ -124,7 +126,7 @@ namespace DessertShop.Migrations
                         .HasMaxLength(10);
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ZipCode")
                         .IsRequired()
@@ -132,6 +134,8 @@ namespace DessertShop.Migrations
                         .HasMaxLength(10);
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -193,6 +197,8 @@ namespace DessertShop.Migrations
 
                     b.HasKey("PieId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Pies");
                 });
 
@@ -201,10 +207,12 @@ namespace DessertShop.Migrations
                     b.Property<string>("ShoppingCartId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("userId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ShoppingCartId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -221,14 +229,14 @@ namespace DessertShop.Migrations
                     b.Property<string>("ShoppingCartId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("stockitemid")
+                    b.Property<Guid>("stockitemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ShoppingCartItemId");
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.HasIndex("stockitemid");
+                    b.HasIndex("stockitemId");
 
                     b.ToTable("ShoppingCartItems");
                 });
@@ -450,6 +458,22 @@ namespace DessertShop.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DessertShop.Models.Cake", b =>
+                {
+                    b.HasOne("DessertShop.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DessertShop.Models.Order", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("DessertShop.Models.OrderDetail", b =>
                 {
                     b.HasOne("DessertShop.Models.Order", "Order")
@@ -465,15 +489,33 @@ namespace DessertShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DessertShop.Models.Pie", b =>
+                {
+                    b.HasOne("DessertShop.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DessertShop.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("DessertShop.Models.ShoppingCartItem", b =>
                 {
-                    b.HasOne("DessertShop.Models.ShoppingCart", null)
+                    b.HasOne("DessertShop.Models.ShoppingCart", "ShoppingCart")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ShoppingCartId");
 
                     b.HasOne("DessertShop.Models.StockItem", "stockitem")
                         .WithMany()
-                        .HasForeignKey("stockitemid");
+                        .HasForeignKey("stockitemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

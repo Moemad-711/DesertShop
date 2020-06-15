@@ -74,7 +74,7 @@ namespace DessertShopUnitTest
 
             _shoppingCartRepository.Setup(mu => mu.GetCartAsync()).ReturnsAsync(shoppingCart);
 
-                _shoppingCartRepository.Setup(mu => mu.GetShoppingCartItems(shoppingCart)).Returns(ShoppingCartItems);
+                _shoppingCartRepository.Setup(mu => mu.GetShoppingCartItems()).Returns(ShoppingCartItems);
                 //act
                 var result = await _OrderController.CheckoutAsync(_order) as RedirectToActionResult;
             Assert.AreEqual(expected, result.ActionName);
@@ -108,7 +108,7 @@ namespace DessertShopUnitTest
 
             _shoppingCartRepository.Setup(mu => mu.GetCartAsync()).ReturnsAsync(shoppingCart);
 
-            _shoppingCartRepository.Setup(mu => mu.GetShoppingCartItems(shoppingCart)).Returns(ShoppingCartItems);
+            _shoppingCartRepository.Setup(mu => mu.GetShoppingCartItems()).Returns(ShoppingCartItems);
             //act
             var inValidResult = await _OrderController.CheckoutAsync(invalidOrder) as ViewResult;
             Assert.AreEqual(expected, inValidResult.ViewName);

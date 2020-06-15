@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DessertShop.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,24 +47,6 @@ namespace DessertShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cakes",
-                columns: table => new
-                {
-                    CakeId = table.Column<Guid>(nullable: false),
-                    CakeName = table.Column<string>(nullable: true),
-                    CakePhoto = table.Column<string>(nullable: true),
-                    ShortDescreption = table.Column<string>(nullable: true),
-                    LongDescreption = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
-                    CakesOfTheWeek = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cakes", x => x.CakeId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -75,61 +57,6 @@ namespace DessertShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    AddressLine1 = table.Column<string>(maxLength: 100, nullable: false),
-                    AddressLine2 = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<string>(maxLength: 10, nullable: false),
-                    City = table.Column<string>(maxLength: 50, nullable: false),
-                    State = table.Column<string>(maxLength: 10, nullable: true),
-                    Country = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: false),
-                    Email = table.Column<string>(maxLength: 50, nullable: false),
-                    OrderTotal = table.Column<decimal>(nullable: false),
-                    OrderPlaced = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pies",
-                columns: table => new
-                {
-                    PieId = table.Column<Guid>(nullable: false),
-                    PieName = table.Column<string>(nullable: true),
-                    PiePhoto = table.Column<string>(nullable: true),
-                    ShortDescreption = table.Column<string>(nullable: true),
-                    LongDescreption = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false),
-                    PiesOfTheWeek = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pies", x => x.PieId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShoppingCarts",
-                columns: table => new
-                {
-                    ShoppingCartId = table.Column<string>(nullable: false),
-                    userId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShoppingCarts", x => x.ShoppingCartId);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,6 +179,103 @@ namespace DessertShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    AddressLine1 = table.Column<string>(maxLength: 100, nullable: false),
+                    AddressLine2 = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(maxLength: 10, nullable: false),
+                    City = table.Column<string>(maxLength: 50, nullable: false),
+                    State = table.Column<string>(maxLength: 10, nullable: true),
+                    Country = table.Column<string>(maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: false),
+                    Email = table.Column<string>(maxLength: 50, nullable: false),
+                    OrderTotal = table.Column<decimal>(nullable: false),
+                    OrderPlaced = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    ShoppingCartId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.ShoppingCartId);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cakes",
+                columns: table => new
+                {
+                    CakeId = table.Column<Guid>(nullable: false),
+                    CakeName = table.Column<string>(nullable: true),
+                    CakePhoto = table.Column<string>(nullable: true),
+                    ShortDescreption = table.Column<string>(nullable: true),
+                    LongDescreption = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    CakesOfTheWeek = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cakes", x => x.CakeId);
+                    table.ForeignKey(
+                        name: "FK_Cakes_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pies",
+                columns: table => new
+                {
+                    PieId = table.Column<Guid>(nullable: false),
+                    PieName = table.Column<string>(nullable: true),
+                    PiePhoto = table.Column<string>(nullable: true),
+                    ShortDescreption = table.Column<string>(nullable: true),
+                    LongDescreption = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false),
+                    PiesOfTheWeek = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pies", x => x.PieId);
+                    table.ForeignKey(
+                        name: "FK_Pies_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderDetails",
                 columns: table => new
                 {
@@ -284,7 +308,7 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     ShoppingCartItemId = table.Column<Guid>(nullable: false),
-                    stockitemid = table.Column<Guid>(nullable: true),
+                    stockitemId = table.Column<Guid>(nullable: false),
                     Amount = table.Column<int>(nullable: false),
                     ShoppingCartId = table.Column<string>(nullable: true)
                 },
@@ -298,11 +322,11 @@ namespace DessertShop.Migrations
                         principalColumn: "ShoppingCartId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_stockItems_stockitemid",
-                        column: x => x.stockitemid,
+                        name: "FK_ShoppingCartItems_stockItems_stockitemId",
+                        column: x => x.stockitemId,
                         principalTable: "stockItems",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -345,6 +369,11 @@ namespace DessertShop.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cakes_CategoryId",
+                table: "Cakes",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderId",
                 table: "OrderDetails",
                 column: "OrderId");
@@ -355,14 +384,29 @@ namespace DessertShop.Migrations
                 column: "stockitemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pies_CategoryId",
+                table: "Pies",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_ShoppingCartId",
                 table: "ShoppingCartItems",
                 column: "ShoppingCartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_stockitemid",
+                name: "IX_ShoppingCartItems_stockitemId",
                 table: "ShoppingCartItems",
-                column: "stockitemid");
+                column: "stockitemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -386,9 +430,6 @@ namespace DessertShop.Migrations
                 name: "Cakes");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -401,16 +442,19 @@ namespace DessertShop.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "stockItems");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }
