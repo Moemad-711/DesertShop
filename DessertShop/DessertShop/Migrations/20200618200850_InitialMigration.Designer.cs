@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DessertShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200615003026_InitialMigration")]
+    [Migration("20200618200850_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,12 @@ namespace DessertShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CakeName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("CakePhoto")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<bool>("CakesOfTheWeek")
                         .HasColumnType("bit");
@@ -40,13 +42,16 @@ namespace DessertShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LongDescreption")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasMaxLength(10);
 
                     b.Property<string>("ShortDescreption")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("CakeId");
 
@@ -63,7 +68,8 @@ namespace DessertShop.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("CategoryId");
 
@@ -83,7 +89,8 @@ namespace DessertShop.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("AddressLine2")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -154,7 +161,8 @@ namespace DessertShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasMaxLength(5);
 
                     b.Property<Guid>("stockitemId")
                         .HasColumnType("uniqueidentifier");
@@ -178,22 +186,27 @@ namespace DessertShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LongDescreption")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("PieName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("PiePhoto")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<bool>("PiesOfTheWeek")
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasMaxLength(5);
 
                     b.Property<string>("ShortDescreption")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("PieId");
 
@@ -224,7 +237,8 @@ namespace DessertShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasMaxLength(3);
 
                     b.Property<string>("ShoppingCartId")
                         .HasColumnType("nvarchar(450)");
@@ -248,10 +262,12 @@ namespace DessertShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasMaxLength(5);
 
                     b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("id");
 

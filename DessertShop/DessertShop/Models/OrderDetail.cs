@@ -21,6 +21,7 @@ namespace DessertShop.Models
         [ForeignKey(nameof(stockitemId))]
         public StockItem stockitem { get; set; }
         public int Amount { get; set; }
+        [StringLength(5)]
         public decimal Price { get; set; }
     }
 }

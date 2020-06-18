@@ -12,13 +12,19 @@ namespace DessertShop.Models
     {
         [Key]
         public Guid PieId { get; set; }
+        [StringLength(50)]
         public string PieName { get; set; }
         [NotMapped]
-        public IFormFile PiePhotoName { get; set; }
+        [StringLength(1000)]
 
+        public IFormFile PiePhotoName { get; set; }
+        [StringLength(1000)]
         public string PiePhoto{ get; set; }
+        [StringLength(50)]
         public string ShortDescreption { get; set; }
+        [StringLength(1000)]
         public string LongDescreption { get; set; }
+        [StringLength(5)]
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]

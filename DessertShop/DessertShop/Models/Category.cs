@@ -14,6 +14,7 @@ namespace DessertShop.Models
     {
         [Key]
         public int CategoryId { get; set; }
+        [StringLength(50)]
         public string CategoryName { get; set; }
     }
 }
