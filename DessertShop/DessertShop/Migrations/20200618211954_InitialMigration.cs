@@ -26,10 +26,10 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: false),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: false),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: false),
                     EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
@@ -52,7 +52,7 @@ namespace DessertShop.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(maxLength: 50, nullable: true)
+                    CategoryName = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,7 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    name = table.Column<string>(maxLength: 50, nullable: true),
+                    name = table.Column<string>(maxLength: 50, nullable: false),
                     Price = table.Column<decimal>(maxLength: 5, nullable: false)
                 },
                 constraints: table =>
@@ -184,7 +184,7 @@ namespace DessertShop.Migrations
                 {
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     AddressLine1 = table.Column<string>(maxLength: 100, nullable: false),
@@ -214,7 +214,7 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     ShoppingCartId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -232,10 +232,10 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     CakeId = table.Column<Guid>(nullable: false),
-                    CakeName = table.Column<string>(maxLength: 50, nullable: true),
-                    CakePhoto = table.Column<string>(maxLength: 1000, nullable: true),
-                    ShortDescreption = table.Column<string>(maxLength: 50, nullable: true),
-                    LongDescreption = table.Column<string>(maxLength: 1000, nullable: true),
+                    CakeName = table.Column<string>(maxLength: 50, nullable: false),
+                    CakePhoto = table.Column<string>(maxLength: 1000, nullable: false),
+                    ShortDescreption = table.Column<string>(maxLength: 50, nullable: false),
+                    LongDescreption = table.Column<string>(maxLength: 1000, nullable: false),
                     Price = table.Column<decimal>(maxLength: 10, nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     CakesOfTheWeek = table.Column<bool>(nullable: false)
@@ -256,10 +256,10 @@ namespace DessertShop.Migrations
                 columns: table => new
                 {
                     PieId = table.Column<Guid>(nullable: false),
-                    PieName = table.Column<string>(maxLength: 50, nullable: true),
-                    PiePhoto = table.Column<string>(maxLength: 1000, nullable: true),
-                    ShortDescreption = table.Column<string>(maxLength: 50, nullable: true),
-                    LongDescreption = table.Column<string>(maxLength: 1000, nullable: true),
+                    PieName = table.Column<string>(maxLength: 50, nullable: false),
+                    PiePhoto = table.Column<string>(maxLength: 1000, nullable: false),
+                    ShortDescreption = table.Column<string>(maxLength: 50, nullable: false),
+                    LongDescreption = table.Column<string>(maxLength: 1000, nullable: false),
                     Price = table.Column<decimal>(maxLength: 5, nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     PiesOfTheWeek = table.Column<bool>(nullable: false)
@@ -310,7 +310,7 @@ namespace DessertShop.Migrations
                     ShoppingCartItemId = table.Column<Guid>(nullable: false),
                     stockitemId = table.Column<Guid>(nullable: false),
                     Amount = table.Column<int>(maxLength: 3, nullable: false),
-                    ShoppingCartId = table.Column<string>(nullable: true)
+                    ShoppingCartId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

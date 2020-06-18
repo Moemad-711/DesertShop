@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DessertShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200618200850_InitialMigration")]
+    [Migration("20200618211954_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

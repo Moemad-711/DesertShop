@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DessertShop.Models
 {
@@ -16,7 +17,6 @@ namespace DessertShop.Models
         public string PieName { get; set; }
         [NotMapped]
         [StringLength(1000)]
-
         public IFormFile PiePhotoName { get; set; }
         [StringLength(1000)]
         public string PiePhoto{ get; set; }
