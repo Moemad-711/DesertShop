@@ -31,7 +31,7 @@ namespace DessertShop.Migrations
                     Email = table.Column<string>(maxLength: 256, nullable: false),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: false),
                     EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(maxLength: 512, nullable: true),
+                    PasswordHash = table.Column<string>(maxLength: 512, nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 25, nullable: true),

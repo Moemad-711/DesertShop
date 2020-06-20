@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DessertShop.Models
 {
@@ -15,15 +16,15 @@ namespace DessertShop.Models
         [StringLength(50)]
         public string CakeName { get; set; }
         [NotMapped]
-        [StringLength(1000)]
+
         public IFormFile CakePhotoName { get; set; }
-        [StringLength(1000)]
+        [MaxLength(1000)]
+
         public string CakePhoto { get; set; }
         [StringLength(50)]
         public string ShortDescreption { get; set; }
         [StringLength(1000)]
         public string LongDescreption { get; set; }
-        [StringLength(10)]
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey(nameof(CategoryId))]
